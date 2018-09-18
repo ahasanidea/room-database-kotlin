@@ -38,7 +38,7 @@ class UserListAdapter(private var userList: ArrayList<User>) : RecyclerView.Adap
             val tvName = itemView.findViewById<TextView>(R.id.tvName)
             val tvAddress = itemView.findViewById<TextView>(R.id.tvAddress)
             tvName.text = user.name
-            tvAddress.text = user.itemName
+            tvAddress.text = user.item
 
             itemView.setOnClickListener{
                 if (onClickListener != null) {

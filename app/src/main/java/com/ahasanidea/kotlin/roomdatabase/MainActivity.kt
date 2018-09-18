@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity(), UserListAdapter.OnClickListener {
     override fun onItemClick(u: User) {
         val intent = Intent(this, AddActivity::class.java)
-        intent.putExtra("userObject", u); // sending our object
+        intent.putExtra("userObject", u) // sending our object
         startActivity(intent)
     }
 

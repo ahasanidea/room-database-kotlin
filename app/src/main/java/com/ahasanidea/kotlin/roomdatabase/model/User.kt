@@ -7,17 +7,23 @@ import java.io.Serializable
 /**
  * Created by Ahasan
  */
+
+//@Parcelize
 @Entity
-class User(var name: String):Serializable {
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0
-    lateinit var personName: String
-    lateinit var itemName: String
-
-    constructor(name: String, item: String) : this(name) {
-        personName = name
-        itemName = item
-    }
-
-
+data class User(@PrimaryKey(autoGenerate = true) var id:Int?=null, var name:String, var item:String): Serializable{
+    constructor():this(null,"","")
 }
+//@Entity
+//class User(var name: String):Serializable {
+//    @PrimaryKey(autoGenerate = true)
+//    var id: Int = 0
+//    lateinit var personName: String
+//    lateinit var itemName: String
+//
+//    constructor(name: String, item: String) : this(name) {
+//        personName = name
+//        itemName = item
+//    }
+//
+//
+//}

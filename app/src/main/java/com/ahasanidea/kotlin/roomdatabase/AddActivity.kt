@@ -33,7 +33,7 @@ class AddActivity:AppCompatActivity(){
         supportActionBar!!.title = "Update User"
         btAdd.text = "Update"
         editName.setText(user.name)
-        editItem.setText(user.itemName)
+        editItem.setText(user.item)
     }
     fun addView(view: View) {
         if (editName.text.isEmpty() || editName.text.isNullOrEmpty()) {
@@ -46,11 +46,12 @@ class AddActivity:AppCompatActivity(){
         }
 
         if (this.user == null) {
-            addUserViewModel!!.addUser(User(editName.text.toString(), editItem.text.toString()))
+            var user=User(name = editName.text.toString(),item = editItem.text.toString())
+            addUserViewModel!!.addUser(user)
             showToast("Successfully added..!!")
         } else {
             user!!.name = editName.text.toString()
-            user!!.itemName = editItem.text.toString()
+            user!!.item = editItem.text.toString()
             addUserViewModel!!.updateUser(user!!)
             showToast("Updated successfully..!!")
         }
