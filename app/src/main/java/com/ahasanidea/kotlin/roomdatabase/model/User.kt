@@ -10,6 +10,4 @@ import java.io.Serializable
 
 //@Parcelize
 @Entity
-data class User(@PrimaryKey(autoGenerate = true) var id:Int?=null, var name:String, var item:String): Serializable{
-    constructor():this(null,"","")
-}
+data class User(@PrimaryKey(autoGenerate = true) var id:Int?=null, var name:String, var item:String): Serializable
