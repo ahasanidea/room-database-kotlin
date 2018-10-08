@@ -2,7 +2,6 @@ package com.ahasanidea.kotlin.roomdatabase
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -18,32 +17,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 
-class MainActivity : AppCompatActivity(), UserListAdapter.OnClickListener {
-    override fun onItemClick(u: User) {
-        val intent = Intent(this, AddActivity::class.java)
-        intent.putExtra("userObject", u) // sending our object
-        startActivity(intent)
-    }
+class MainActivity : AppCompatActivity() {
+    private lateinit var userRecyclerViewModel: UserViewModel
+    private lateinit var myAdapter: UserListAdapter
 
-    override fun onItemDelete(u: User) {
-        showAlertDelete(u)
-    }
-    private fun showAlertDelete(u: User) {
-        val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle("Confirm Delete...")
-        alertDialog.setMessage("Are you sure you want delete this?")
-        alertDialog.setIcon(android.R.drawable.ic_delete)
-        alertDialog.setPositiveButton("YES", DialogInterface.OnClickListener { dialog, which ->
-            userRecyclerViewModel!!.deleteItem(u)
-        })
-        alertDialog.setNegativeButton("NO", DialogInterface.OnClickListener { dialog, which ->
-            dialog.cancel()
-        })
-        alertDialog.show()
-    }
-
-    private var userRecyclerViewModel: UserViewModel? = null
-    private var myAdapter: UserListAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -52,16 +29,33 @@ class MainActivity : AppCompatActivity(), UserListAdapter.OnClickListener {
         fab.setOnClickListener {
             startActivity(Intent(this,AddActivity::class.java))
         }
-        myAdapter = UserListAdapter(ArrayList<User>())
+        myAdapter = UserListAdapter()
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = myAdapter
-        myAdapter!!.setListener(this)
+
 
         userRecyclerViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
-        userRecyclerViewModel!!.getAllUsers().observe(this, Observer<List<User>> { t ->
-            myAdapter!!.addItems(t as ArrayList<User>)
+        userRecyclerViewModel.getAllUsers().observe(this, Observer<List<User>> { t ->
+            myAdapter.addItems(t as ArrayList<User>)
         })
 
+        myAdapter.setListener(object :UserListAdapter.OnClickListener{
+            override fun onItemClick(u: User) {
+                updateUser(u)
+            }
+
+            override fun onItemDelete(u: User) {
+                showAlertDelete(u)
+            }
+
+        })
+
+    }
+
+   private fun updateUser(user:User){
+       val intent = Intent(this, AddActivity::class.java)
+       intent.putExtra("userObject", user) // sending our object
+       startActivity(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -81,7 +75,20 @@ class MainActivity : AppCompatActivity(), UserListAdapter.OnClickListener {
     }
     override fun onResume() {
         super.onResume()
-        myAdapter!!.notifyDataSetChanged()
+        myAdapter.notifyDataSetChanged()
+    }
+    private fun showAlertDelete(u: User) {
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle("Confirm Delete...")
+        alertDialog.setMessage("Are you sure you want delete this?")
+        alertDialog.setIcon(android.R.drawable.ic_delete)
+        alertDialog.setPositiveButton("YES") { _, _ ->
+            userRecyclerViewModel.deleteItem(u)
+        }
+        alertDialog.setNegativeButton("NO") { dialog, _ ->
+            dialog.cancel()
+        }
+        alertDialog.show()
     }
 
 }

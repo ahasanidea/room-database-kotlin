@@ -32,26 +32,26 @@ class AddActivity:AppCompatActivity(){
         this.user = user
         supportActionBar!!.title = "Update User"
         btAdd.text = "Update"
-        editName.setText(user.name)
-        editItem.setText(user.item)
+        etName.setText(user.name)
+        etAddress.setText(user.address)
     }
     fun addView(view: View) {
-        if (editName.text.isEmpty() || editName.text.isNullOrEmpty()) {
+        if (etName.text.isEmpty() || etName.text.isNullOrEmpty()) {
             showToast("person name is empty..!!")
             return
         }
-        if (editItem.text.isEmpty() || editItem.text.isNullOrEmpty()) {
-            showToast("Item name is empty..!!")
+        if (etAddress.text.isEmpty() || etAddress.text.isNullOrEmpty()) {
+            showToast("Address is empty..!!")
             return
         }
 
         if (this.user == null) {
-            var user=User(name = editName.text.toString(),item = editItem.text.toString())
+            var user=User(name = etName.text.toString(),address = etAddress.text.toString())
             addUserViewModel!!.addUser(user)
             showToast("Successfully added..!!")
         } else {
-            user!!.name = editName.text.toString()
-            user!!.item = editItem.text.toString()
+            user!!.name = etName.text.toString()
+            user!!.address = etAddress.text.toString()
             addUserViewModel!!.updateUser(user!!)
             showToast("Updated successfully..!!")
         }

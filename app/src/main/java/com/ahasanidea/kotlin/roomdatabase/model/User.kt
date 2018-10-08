@@ -5,9 +5,9 @@ import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
 
 /**
- * Created by Ahasan
+ * Created by Ahasan on 08/10/2018
  */
 
 //@Parcelize
 @Entity
-data class User(@PrimaryKey(autoGenerate = true) var id:Int?=null, var name:String, var item:String): Serializable
+data class User(@PrimaryKey(autoGenerate = true) var id:Int?=null, var name:String, var address:String): Serializable

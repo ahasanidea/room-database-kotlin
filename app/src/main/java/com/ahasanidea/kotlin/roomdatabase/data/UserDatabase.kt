@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import com.ahasanidea.kotlin.roomdatabase.model.User
 
-@Database(entities = [User::class],version = 1)
+@Database(entities = [User::class],version = 2)
  abstract class UserDatabase :RoomDatabase() {
     abstract fun userDao(): UserDao
     companion object {

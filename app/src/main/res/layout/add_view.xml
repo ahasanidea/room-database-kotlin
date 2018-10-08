@@ -33,7 +33,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/editName"
+                android:id="@+id/etName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Person Name"
@@ -46,10 +46,10 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/editItem"
+                android:id="@+id/etAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Item Name"
+                android:hint="Address"
                 android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
