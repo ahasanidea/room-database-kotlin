@@ -29,15 +29,18 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             startActivity(Intent(this,AddActivity::class.java))
         }
-        myAdapter = UserListAdapter()
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = myAdapter
 
+        myAdapter = UserListAdapter()
 
         userRecyclerViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         userRecyclerViewModel.getAllUsers().observe(this, Observer<List<User>> { t ->
+
             myAdapter.addItems(t as ArrayList<User>)
+            recyclerView.layoutManager = LinearLayoutManager(this)
+            recyclerView.adapter = myAdapter
         })
+
+
 
         myAdapter.setListener(object :UserListAdapter.OnClickListener{
             override fun onItemClick(u: User) {
